@@ -9,8 +9,16 @@ import os
 
 # Load or create log data
 LOG_FILE = "mamba_logs.csv"
-if os.path.exists(LOG_FILE):
+
+try:
     logs_df = pd.read_csv(LOG_FILE)
+except pd.errors.EmptyDataError:
+    logs_df = pd.DataFrame(columns=[
+        "Date", "Shift", "Machine", "Operator ID", 
+        "Runtime (hrs)", "Downtime (mins)", "OEE (%)", 
+        "Issue", "Fix"
+    ])
+
 else:
     logs_df = pd.DataFrame(columns=["Date", "Shift", "Machine", "Operator ID", "Runtime (hrs)", "Downtime (mins)", "OEE (%)", "Issue", "Fix"])
 
